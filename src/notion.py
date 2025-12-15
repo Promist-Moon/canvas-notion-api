@@ -1,5 +1,5 @@
 import requests, json
-
+from config.compute_week import compute_week_from_due
 
 class NotionApi:
     def __init__(
@@ -73,6 +73,113 @@ class NotionApi:
                 "Due Date": {"date": {}},
                 "URL": {"url": {}},
                 "Notes": {"rich_text": {}},
+                "Semester": {
+                    "type": "select",
+                    "select": {
+                        "options": [
+                            {
+                                "name": "Y2S1",
+                                "color": "blue"
+                            },
+                            {
+                                "name": "Y2S2",
+                                "color": "green"
+                            },
+                            {
+                                "name": "Y3S1",
+                                "color": "pink"
+                            },
+                            {
+                                "name": "Y3S2",
+                                "color": "yellow"
+                            },
+                            {
+                                "name": "Y4S1",
+                                "color": "purple"
+                            },
+                            {
+                                "name": "Y4S2",
+                                "color": "red"
+                            }
+                        ]
+                    }
+                },
+                "Week": {
+                    "name": "Week",
+                    "type": "select",
+                    "select": {
+                        "options": [
+                            {
+                                "name": "Week 1",
+                                "color": "pink"
+                            },
+                            {
+                                "name": "Week 2",
+                                "color": "green"
+                            },
+                            {
+                                "name": "Week 3",
+                                "color": "orange"
+                            },
+                            {
+                                "name": "Week 4",
+                                "color": "purple"
+                            },
+                            {
+                                "name": "Week 5",
+                                "color": "yellow"
+                            },
+                            {
+                                "name": "Week 6",
+                                "color": "blue"
+                            },
+                            {
+                                "name": "Recess Week",
+                                "color": "brown"
+                            },
+                            {
+                                "name": "Week 7",
+                                "color": "red"
+                            },
+                            {
+                                "name": "Week 8",
+                                "color": "orange"
+                            },
+                            {
+                                "name": "Week 9",
+                                "color": "pink"
+                            },
+                            {
+                                "name": "Week 10",
+                                "color": "blue"
+                            },
+                            {
+                                "name": "Week 11",
+                                "color": "yellow"
+                            },
+                            {
+                                "name": "Week 12",
+                                "color": "purple"
+                            },
+                            {
+                                "name": "Week 13",
+                                "color": "green"
+                            },
+                            {
+                                "name": "Reading Week",
+                                "color": "red"
+                            },
+                            {
+                                "name": "Exam Week 1",
+                                "color": "brown"
+                            },
+                            {
+                                "name": "Exam Week 2",
+                                "color": "blue"
+                            }
+                        ]
+                    }
+                }
             },
         }
 
@@ -139,6 +246,11 @@ class NotionApi:
                 "URL": {
                     "url": url,
                 },
+                "Week": {
+                    "select": {
+                        "name": compute_week_from_due(dueDate["start"]),
+                    }
+                }
             },
         }
 

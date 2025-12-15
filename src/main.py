@@ -10,10 +10,13 @@ notionPageId = os.getenv("NOTION_PAGE_ID")
 schoolAb = os.getenv("SCHOOL_AB")
 databaseId = os.getenv("DATABASE_ID")
 
+# if you want to use an existing database, uncomment below
 user = User(canvasKey, notionToken, notionPageId, schoolAb, database_id=databaseId)
 
 # if you want to create a new database, uncomment below
 # user = User(canvasKey, notionToken, notionPageId, schoolAb)
 
+# Stop here to create a status object in database first, with the default settings.
+# Else, you will get an error message that status property does not exist.
 courses = user.getAllCourses()
 user.enterAssignmentsToNotionDb(courses)
