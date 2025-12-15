@@ -1,7 +1,7 @@
 import json, requests
 from canvas import CanvasApi
 from notion import NotionApi
-
+from config.time_helpers import date_to_sg_offset_iso
 
 class User:
     def __init__(
@@ -60,7 +60,7 @@ class User:
                 self.notionProfile.createNewDatabaseItem(
                     id=assignment["id"],
                     className=course.name,
-                    dueDate={"start": assignment["due_at"]},
+                    dueDate=date_to_sg_offset_iso(assignment["due_at"]),
                     url=assignment["url"],
                     assignmentName=assignment["name"],
                     has_submitted=assignment["has_submitted_submissions"],
@@ -76,7 +76,7 @@ class User:
                 self.notionProfile.createNewDatabaseItem(
                     id=assignment["id"],
                     className=course.name,
-                    dueDate=assignment["due_at"],
+                    dueDate=date_to_sg_offset_iso(assignment["due_at"]),
                     url=assignment["url"],
                     assignmentName=assignment["name"],
                     has_submitted=assignment["has_submitted_submissions"],

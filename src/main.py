@@ -16,7 +16,12 @@ user = User(canvasKey, notionToken, notionPageId, schoolAb, database_id=database
 # if you want to create a new database, uncomment below
 # user = User(canvasKey, notionToken, notionPageId, schoolAb)
 
-# Stop here to create a status object in database first, with the default settings.
-# Else, you will get an error message that status property does not exist.
+# create database
+# user.createDatabase()
+
+"""
+Stop here to create a status object in database first, with the default settings.
+Else, you will get an error message that status property does not exist.
+"""
 courses = user.getAllCourses()
 user.enterAssignmentsToNotionDb(courses)

@@ -26,7 +26,7 @@ class CanvasApi:
             "include": ["concluded"],
             "enrollment_state": ["active"],
         }
-        readUrl = f"https://{self.schoolAb}.edu.sg/api/v1/courses"
+        readUrl = f"https://{self.schoolAb}/api/v1/courses"
         classes = []
         courses = requests.request(
             "GET", readUrl, headers=self.header, params=params
@@ -68,7 +68,7 @@ class CanvasApi:
             "include": ["concluded"],
             "enrollment_state": ["active"],
         }
-        readUrl = f"https://{self.schoolAb}.edu.sg/api/v1/courses"
+        readUrl = f"https://{self.schoolAb}/api/v1/courses"
         classes = []
         courses = requests.request(
             "GET", readUrl, headers=self.header, params=params
@@ -100,7 +100,7 @@ class CanvasApi:
 
     # Returns a list of all assignment objects for a given course
     def get_assignment_objects(self, courseName, timeframe=None):
-        readUrl = f"https://{self.schoolAb}.edu.sg/api/v1/courses/{self.courses[courseName]}/assignments/"
+        readUrl = f"https://{self.schoolAb}/api/v1/courses/{self.courses[courseName]}/assignments/"
         params = {"per_page": 500, "bucket": timeframe}
 
         assignments = requests.request(
@@ -109,15 +109,8 @@ class CanvasApi:
         assignmentList = []
 
         for assignment in assignments:
-            i = 0
-            newDueDate = ""
             if assignment.get("due_at") == None:
-                assignment["due_at"] = "2021-01-01"
-            else:
-                while assignment["due_at"][i] != "T":
-                    newDueDate += assignment["due_at"][i]
-                    i += 1
-                assignment["due_at"] = newDueDate
+                assignment["due_at"] = None
 
             assignment["url"] = assignment["html_url"]
             assignmentList.append(assignment)
@@ -128,7 +121,7 @@ class CanvasApi:
     def update_assignment_objects(
         self, notionAssignmentsList, courseName, timeframe=None
     ):
-        readUrl = f"https://{self.schoolAb}.edu.sg/api/v1/courses/{self.courses[courseName]}/assignments/"
+        readUrl = f"https://{self.schoolAb}/api/v1/courses/{self.courses[courseName]}/assignments/"
         params = {"per_page": 500, "bucket": timeframe}
 
         assignments = requests.request(
@@ -137,17 +130,10 @@ class CanvasApi:
         assignmentList = []
 
         for assignment in assignments:
-            i = 0
-            newDueDate = ""
             if assignment.get("due_at") == None:
                 assignment["due_at"] = None
             else:
-                while assignment["due_at"][i] != "T":
-                    newDueDate += assignment["due_at"][i]
-                    i += 1
-
-                newDueDate = date.fromisoformat(newDueDate) - relativedelta(days=1)
-                assignment["due_at"] = str(newDueDate)
+                assignment["due_at"] = assignment["due_at"]
 
             assignment["url"] = assignment["html_url"]
 

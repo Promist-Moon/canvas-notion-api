@@ -1,5 +1,5 @@
 import requests, json
-from config.compute_week import compute_week_from_due
+from config.time_helpers import compute_week_from_due
 
 class NotionApi:
     def __init__(
@@ -207,9 +207,6 @@ class NotionApi:
         url=None,
         dueDate=None,
     ):
-        if dueDate["start"] == None:
-            dueDate = None
-
         # if status:
         #     status = "To do"
         # else:
@@ -242,13 +239,17 @@ class NotionApi:
                         "name": className,
                     }
                 },
-                "Due Date": {"date": dueDate},
+                "Due Date": {
+                    "date": {
+                        "start": dueDate,
+                    },
+                },
                 "URL": {
                     "url": url,
                 },
                 "Week": {
                     "select": {
-                        "name": compute_week_from_due(dueDate["start"]),
+                        "name": compute_week_from_due(dueDate),
                     }
                 }
             },
