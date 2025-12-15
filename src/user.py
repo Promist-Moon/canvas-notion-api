@@ -55,7 +55,7 @@ class User:
             for assignment in self.canvasProfile.update_assignment_objects(
                 self.notionProfile.parseDatabaseForAssignments(),
                 course.name,
-                "future",
+                "past",
             ):
                 self.notionProfile.createNewDatabaseItem(
                     id=assignment["id"],
