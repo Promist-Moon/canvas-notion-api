@@ -1,5 +1,5 @@
 import requests, json
-from config.time_helpers import compute_week_from_due
+from config.time_helpers import compute_week_from_due, compute_semester_from_due
 
 class NotionApi:
     def __init__(
@@ -71,39 +71,6 @@ class NotionApi:
                     "select": {"options": []},
                 },
                 "Due Date": {"date": {}},
-                "URL": {"url": {}},
-                "Notes": {"rich_text": {}},
-                "Semester": {
-                    "type": "select",
-                    "select": {
-                        "options": [
-                            {
-                                "name": "Y2S1",
-                                "color": "blue"
-                            },
-                            {
-                                "name": "Y2S2",
-                                "color": "green"
-                            },
-                            {
-                                "name": "Y3S1",
-                                "color": "pink"
-                            },
-                            {
-                                "name": "Y3S2",
-                                "color": "yellow"
-                            },
-                            {
-                                "name": "Y4S1",
-                                "color": "purple"
-                            },
-                            {
-                                "name": "Y4S2",
-                                "color": "red"
-                            }
-                        ]
-                    }
-                },
                 "Week": {
                     "name": "Week",
                     "type": "select",
@@ -179,7 +146,64 @@ class NotionApi:
                             }
                         ]
                     }
-                }
+                },
+                "Semester": {
+                    "type": "select",
+                    "select": {
+                        "options": [
+                            {
+                                "name": "Y1S1",
+                                "color": "yellow"
+                            },
+                            {
+                                "name": "Y1S2",
+                                "color": "pink"
+                            },
+                            {
+                                "name": "Y1 Special Term",
+                                "color": "brown"
+                            },
+                            {
+                                "name": "Y2S1",
+                                "color": "blue"
+                            },
+                            {
+                                "name": "Y2S2",
+                                "color": "green"
+                            },
+                            {
+                                "name": "Y2 Special Term",
+                                "color": "orange"
+                            },
+                            {
+                                "name": "Y3S1",
+                                "color": "pink"
+                            },
+                            {
+                                "name": "Y3S2",
+                                "color": "yellow"
+                            },
+                            {
+                                "name": "Y3 Special Term",
+                                "color": "brown"
+                            },
+                            {
+                                "name": "Y4S1",
+                                "color": "purple"
+                            },
+                            {
+                                "name": "Y4S2",
+                                "color": "red"
+                            },
+                            {
+                                "name": "Y4 Special Term",
+                                "color": "orange"
+                            }
+                        ]
+                    }
+                },
+                "URL": {"url": {}},
+                "Notes": {"rich_text": {}},
             },
         }
 
@@ -251,7 +275,12 @@ class NotionApi:
                     "select": {
                         "name": compute_week_from_due(dueDate),
                     }
-                }
+                },
+                "Semester": {
+                    "select": {
+                        "name": compute_semester_from_due(dueDate),
+                    }
+                },
             },
         }
 

@@ -147,26 +147,13 @@ class CanvasApi:
             print(course.name)
 
 
+# get course code from course name
 def cleanCourseName(name):
     cleanName = ""
-    num = 0
 
-    if name != None:
-        name = name.replace(" ", "")
-
-    while name[num].isalpha() or name[num] == "/" or name[num] == "-":
-        cleanName += name[num]
-
-        if name[num] == name[-1]:
+    for char in name:
+        if char.isspace():
             break
+        cleanName += char
 
-        num += 1
-
-    while name[num].isdigit() and num < 6:
-        cleanName += name[num]
-
-        if name[num] == name[-1]:
-            break
-
-        num += 1
     return cleanName
